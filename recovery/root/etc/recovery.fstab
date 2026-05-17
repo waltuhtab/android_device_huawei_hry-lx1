@@ -1,25 +1,30 @@
-# blk_device                                    mount_point fs_type
-/dev/block/mmcblk1p1                            /sdcard     vfat      defaults        defaults
-defaults                                        /storage    ramdisk   defaults        defaults
-defaults                                        /dload      ramdisk   defaults        defaults
-/dev/block/bootdevice/by-name/system     /system     ext4      defaults        defaults
-/dev/block/bootdevice/by-name/vendor     /vendor     ext4      defaults        defaults
-/dev/block/bootdevice/by-name/hw_product /hw_product ext4      defaults        defaults
-/dev/block/bootdevice/by-name/version    /version    ext4      defaults        defaults
-/dev/block/bootdevice/by-name/cache      /cache      ext4      defaults        defaults
-/dev/block/bootdevice/by-name/userdata   /data       f2fs      defaults        length=-16384,fileencryption=aes-256-xts:aes-256-cts,reservedsize=20M
-/dev/block/bootdevice/by-name/misc       /misc       emmc      defaults        defaults
-/dev/block/bootdevice/by-name/boot       /boot       emmc      defaults        defaults
-/dev/block/bootdevice/by-name/recovery   /recovery   emmc      defaults        defaults
-/dev/block/bootdevice/by-name/cust       /cust       ext4      defaults        defaults
-/dev/block/bootdevice/by-name/uboot      /uboot      emmc      defaults        defaults
-/dev/block/bootdevice/by-name/splash2    /splash2    ext4      defaults        defaults
-/dev/block/bootdevice/by-name/3rdmodem   /3rdmodem   ext4      defaults        defaults
-/dev/block/bootdevice/by-name/system     /newsys     ext4      defaults        defaults
-/dev/block/bootdevice/by-name/odm        /odm        ext4      defaults        defaults
-/dev/block/sde1                          /usb        vfat      defaults        defaults
-/dev/block/sde1                          /usb_ufs    vfat      defaults        defaults
-/dev/block/sda1                          /usb_emmc   vfat      defaults        defaults
-/dev/block/by-name/modem_om    /modem_log    ext4    rw,noauto_da_alloc,nosuid,nodev,noatime,data=ordered,barrier=1,context=u:object_r:modem_log_file:s0    wait,check,notrim
-/dev/block/by-name/modem_fw    /modem_fw    ext4    defaults        defaults
-/dev/block/by-name/modemnvm_img    /mnvm2:0    ext4   rw,noauto_da_alloc,nosuid,nodev,noatime,data=ordered,barrier=1,context=u:object_r:modem_nv_file:s0   wait,check,notrim
+# recovery.fstab
+# Honor 10 Lite (HRY-LX1) — Kirin 710
+# Generated from stock vendor/etc/recovery.fstab analysis
+#
+# Format: <mount_point>  <fs_type>  <device>  [flags]
+#
+# NOTE: Block device paths use /dev/block/by-name/ symlinks
+# which are created by init from the partition table.
+# Verify these against your actual device if something won't mount.
+
+/boot           emmc    /dev/block/by-name/boot
+/recovery       emmc    /dev/block/by-name/recovery
+/system         ext4    /dev/block/by-name/system          flags=display="System"
+/vendor         ext4    /dev/block/by-name/vendor           flags=display="Vendor"
+/cache          ext4    /dev/block/by-name/cache            flags=display="Cache"
+/data           ext4    /dev/block/by-name/userdata         flags=fileencryption=aes-256-xts:aes-256-cts,display="Data"
+/cust           ext4    /dev/block/by-name/cust             flags=display="Cust";fsflags="ro"
+/odm            ext4    /dev/block/by-name/odm              flags=display="ODM"
+/splash2        emmc    /dev/block/by-name/splash2
+/misc           emmc    /dev/block/by-name/misc
+/metadata       ext4    /dev/block/by-name/metadata         flags=display="Metadata"
+
+# External SD (if present)
+/external_sd    auto    /dev/block/mmcblk1p1                flags=display="MicroSD";storage;wipeingui;removable
+
+# USB OTG
+/usb_otg        auto    /dev/block/sda1                     flags=display="USB OTG";storage;wipeingui;removable
+
+# Virtual (for MTP / internal storage browsing)
+/data/media     auto    /dev/block/by-name/userdata         flags=display="Internal Storage";storage;settingsstorage;wipeingui

@@ -1,0 +1,44 @@
+# system.prop
+# Honor 10 Lite (HRY-LX1)
+# These properties are set at boot by the device tree
+
+# Platform
+ro.board.platform=kirin710
+ro.hardware=kirin710
+
+# Display
+ro.sf.lcd_density=320
+ro.opengles.version=196610
+
+# Media
+media.stagefright.legacyencoder=true
+media.stagefright.less-secure=true
+
+# Dalvik
+dalvik.vm.heapstartsize=8m
+dalvik.vm.heapgrowthlimit=256m
+dalvik.vm.heapsize=512m
+dalvik.vm.heaptargetutilization=0.75
+dalvik.vm.heapminfree=512k
+dalvik.vm.heapmaxfree=8m
+
+# WiFi
+wifi.interface=wlan0
+wifi.supplicant_scan_interval=15
+
+# USB
+persist.sys.usb.config=mtp
+
+# Bluetooth
+bluetooth.hfp.client=1
+
+# RIL
+rild.libpath=/vendor/lib64/libbalong-ril.so
+rild.libargs=-d /dev/ttyAMA0
+
+# Audio
+af.fast_track_multiplier=1
+audio.deep_buffer.media=true
+
+# Camera
+camera.disable_zsl_mode=1

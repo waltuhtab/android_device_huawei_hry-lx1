@@ -1,0 +1,16 @@
+# sepolicy/vendor/file_contexts
+# Honor 10 Lite (HRY-LX1) — vendor SELinux file contexts
+
+# Vendor init scripts
+/vendor/etc/init/init\.recovery\.huawei\.rc     u:object_r:vendor_configs_file:s0
+/vendor/etc/init/init\.recovery\.hi1102\.rc     u:object_r:vendor_configs_file:s0
+/vendor/etc/init/init\.recovery\.hi1102a\.rc    u:object_r:vendor_configs_file:s0
+
+# TEE vendor libs
+/vendor/lib64/libteec_vendor\.so                u:object_r:same_process_hal_file:s0
+/vendor/lib64/hw/vendor\.huawei\.hardware\.libteec@3\.0-impl\.so  u:object_r:same_process_hal_file:s0
+
+# GPU libs
+/vendor/lib64/egl/libGLES_mali\.so              u:object_r:same_process_hal_file:s0
+/vendor/lib64/hw/gralloc\.kirin710\.so          u:object_r:same_process_hal_file:s0
+/vendor/lib64/hw/vulkan\.kirin710\.so           u:object_r:same_process_hal_file:s0

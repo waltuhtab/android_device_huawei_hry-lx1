@@ -1,0 +1,28 @@
+# vendor.prop
+# Honor 10 Lite (HRY-LX1)
+# Vendor-side properties
+
+# Graphics
+ro.hardware.gralloc=kirin710
+ro.hardware.vulkan=kirin710
+ro.hardware.egl=mali
+
+# VNDK
+ro.vndk.version=29
+
+# Treble
+ro.treble.enabled=true
+
+# Encryption
+ro.crypto.type=file
+ro.crypto.state=encrypted
+ro.crypto.volume.filenames_mode=aes-256-cts
+
+# TEE
+ro.hardware.tee=1
+
+# Fingerprint
+persist.vendor.fingerprint.fp_sleep_enable=1
+
+# Performance
+ro.vendor.perf.scroll_opt=true

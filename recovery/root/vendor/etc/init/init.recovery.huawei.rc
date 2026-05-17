@@ -1,0 +1,43 @@
+# init.recovery.huawei.rc
+# Honor 10 Lite (HRY-LX1) — Recovery init script
+# Copied from vendor/etc/init/init.recovery.huawei.rc
+# This file is sourced by TWRP at recovery startup
+#
+# Handles: TEE daemon startup, keymaster, gatekeeper
+# These are required for /data FBE decryption
+
+on init
+    # Create TEE device nodes
+    mkdir /dev/tee 0775 system system
+    mkdir /dev/teecd 0775 system system
+
+on property:ro.crypto.state=encrypted
+    # Start TEE daemon early so keymaster is available for decryption
+    start tee_daemon
+
+service tee_daemon /vendor/bin/tee_daemon
+    class core
+    user root
+    group root
+    seclabel u:r:tee:s0
+    disabled
+
+service keystore /system/bin/keystore /data/misc/keystore
+    class main
+    user keystore
+    group keystore drmrpc readproc log
+    writepid /dev/cpuset/foreground/tasks
+
+# Gatekeeper
+service gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
+    class hal
+    user system
+    group system
+    seclabel u:r:hal_gatekeeper_default:s0
+
+# Keymaster (TEE-backed)
+service keymaster-4-0 /vendor/bin/hw/android.hardware.keymaster@4.0-service
+    class hal
+    user system
+    group system drmrpc
+    seclabel u:r:hal_keymaster_default:s0

@@ -1,0 +1,13 @@
+# sepolicy/private/file_contexts
+# Honor 10 Lite (HRY-LX1) — private SELinux file contexts
+# Minimal entries needed for TWRP to label recovery files correctly
+
+# TEE device nodes
+/dev/tee.*                          u:object_r:tee_device:s0
+/dev/teecd                          u:object_r:tee_device:s0
+
+# Hi1102 Wi-Fi sysfs
+/sys/module/hisi_wifi(/.*)?         u:object_r:sysfs_wifi:s0
+
+# Backlight sysfs (for TW_BRIGHTNESS_PATH)
+/sys/class/leds/lcd_backlight0(/.*)?    u:object_r:sysfs_leds:s0
