@@ -26,11 +26,12 @@ TARGET_2ND_CPU_ABI2              := armeabi
 TARGET_2ND_CPU_VARIANT           := cortex-a53
 
 TARGET_USES_64_BIT_BINDER        := true
-
+BOARD_INCLUDE_DTB_IN_BOOTIMG     := true # Touch might break without this
 # =============================================================================
 # Kernel
 # =============================================================================
-TARGET_PREBUILT_KERNEL           := $(LOCAL_PATH)/prebuilt/Image.gz # -- IMPORTANT NOTE: Most Honor Kernels are gz-dtb extension change this if it breaks
+TARGET_PREBUILT_KERNEL           := $(LOCAL_PATH)/prebuilt/Image.gz 
+# -- IMPORTANT NOTE: Most Honor Kernels are gz-dtb extension change this if it breaks
 # NOTE: Replace with your extracted kernel image from boot.img
 # To extract: unpack boot.img with magiskboot or AIK, grab the Image.gz
 
@@ -57,8 +58,8 @@ BOARD_MKBOOTIMG_ARGS             += --pagesize $(BOARD_KERNEL_PAGESIZE)
 # =============================================================================
 BOARD_BOOTIMAGE_PARTITION_SIZE           := 33554432
 BOARD_RECOVERYIMAGE_PARTITION_SIZE       := 33554432
-BOARD_SYSTEMIMAGE_PARTITION_SIZE         := 3925868544
-BOARD_VENDORIMAGE_PARTITION_SIZE         := 671088640
+BOARD_SYSTEMIMAGE_PARTITION_SIZE         := 3925868544 # Assumed - Unverified
+BOARD_VENDORIMAGE_PARTITION_SIZE         := 671088640  # Assumed - Unverified
 BOARD_CACHEIMAGE_PARTITION_SIZE          := 134217728
 BOARD_USERDATAIMAGE_PARTITION_SIZE       := 55834574848
 
