@@ -30,7 +30,7 @@ TARGET_USES_64_BIT_BINDER        := true
 # =============================================================================
 # Kernel
 # =============================================================================
-TARGET_PREBUILT_KERNEL           := $(LOCAL_PATH)/prebuilt/Image.gz
+TARGET_PREBUILT_KERNEL           := $(LOCAL_PATH)/prebuilt/Image.gz # -- IMPORTANT NOTE: Most Honor Kernels are gz-dtb extension change this if it breaks
 # NOTE: Replace with your extracted kernel image from boot.img
 # To extract: unpack boot.img with magiskboot or AIK, grab the Image.gz
 
@@ -54,8 +54,6 @@ BOARD_MKBOOTIMG_ARGS             += --pagesize $(BOARD_KERNEL_PAGESIZE)
 
 # =============================================================================
 # Partitions
-# NOTE: Verify exact sizes from fstab.kirin710 on your device.
-# These are typical HRY-LX1 values — do not assume they are correct.
 # =============================================================================
 BOARD_BOOTIMAGE_PARTITION_SIZE           := 33554432
 BOARD_RECOVERYIMAGE_PARTITION_SIZE       := 33554432
@@ -64,12 +62,18 @@ BOARD_VENDORIMAGE_PARTITION_SIZE         := 671088640
 BOARD_CACHEIMAGE_PARTITION_SIZE          := 134217728
 BOARD_USERDATAIMAGE_PARTITION_SIZE       := 55834574848
 
-BOARD_FLASH_BLOCK_SIZE                   := 4096
+BOARD_FLASH_BLOCK_SIZE                   := 131072
 TARGET_USERIMAGES_USE_EXT4               := true
+BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE 		 := ext4
 TARGET_USERIMAGES_USE_F2FS               := true
+BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE 	 := f2fs
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE        := ext4
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE       := ext4
 TARGET_COPY_OUT_VENDOR                   := vendor
+TARGET_COPY_OUT_PRODUCT 				 := product
+BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE 	 := ext4
+TARGET_COPY_OUT_ODM 					 := odm
+BOARD_ODMIMAGE_FILE_SYSTEM_TYPE 		 := ext4
 
 # =============================================================================
 # Display
@@ -102,6 +106,10 @@ TW_DEFAULT_BRIGHTNESS                    := 128
 TW_NO_SCREEN_BLANK                       := false
 TW_NO_HAPTICS                            := false
 
+# Huawei/TWRP Specific flags -- Common Huawei/Kirin requirements
+TARGET_NO_BOOTLOADER			    	 := true
+TARGET_NO_RADIOIMAGE					 := true
+
 # Internal storage
 TW_INTERNAL_STORAGE_PATH                 := "/data/media/0"
 TW_INTERNAL_STORAGE_MOUNT_POINT         := "data"
@@ -110,13 +118,14 @@ TW_EXTERNAL_STORAGE_MOUNT_POINT         := "external_sd"
 
 # =============================================================================
 # Encryption
+# Userdata entry is fileencryption=aes-256-xts:aes-256-cts so FBE encryption is needed
 # FBE is confirmed on this device (EMUI 10 / Android 10)
 # TEE stack: libteec @3.0 — must be running for decrypt to work
 # =============================================================================
 TW_INCLUDE_CRYPTO                        := true
+TW_INCLUDE_FBE := true
 TW_INCLUDE_CRYPTO_FBE                    := true
 TW_INCLUDE_FBE_METADATA_DECRYPT         := true
-BOARD_USES_QCOM_FBE_DECRYPTION          := false
 
 # Security patch — set to match your firmware's actual patch level
 PLATFORM_VERSION                         := 10

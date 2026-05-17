@@ -19,4 +19,19 @@ cp kernel ../device/huawei/hry-lx1/prebuilt/Image.gz
 ```
 
 ## Expected file
-`prebuilt/Image.gz` — ARM64 kernel, typically 8–12MB for Kirin 710
+`prebuilt/Image.gz` — ARM64 kernel, typically 8–12MB for Kirin 710 (Most Honor Kernels are gz-dtb extension change it in boardconfig if it breaks)
+
+## TO DO:
+Check whether stock firmware has:
+
+dtbo.img
+
+If yes, add in boardconfig:
+
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+
+OR:
+
+BOARD_PREBUILT_DTBOIMAGE := path/to/dtbo.img
+
+depending on implementation.
